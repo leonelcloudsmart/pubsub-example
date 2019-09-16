@@ -5,8 +5,6 @@ services:
     build: pubsub
     environment:
       PUBSUB_PROJECT_ID: pubsub-dummy-project
-    ports:
-      - "8538:8538"
     networks:
       - pubsub-local
   pubsub-setter:
