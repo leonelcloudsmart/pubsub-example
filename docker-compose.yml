@@ -1,0 +1,25 @@
+version: '3.2'
+services:
+  pubsub:
+    image: fake-pubsub:0.0.1-20190910
+    build: pubsub
+    environment:
+      PUBSUB_PROJECT_ID: pubsub-dummy-project
+    ports:
+      - "8538:8538"
+    networks:
+      - pubsub-local
+  pubsub-setter:
+    image: fake-pubsub-setter:0.0.1-20190910
+    build: pubsub-setter
+    environment:
+      PUBSUB_EMULATOR_HOST: pubsub:8538
+      PUBSUB_PROJECT_ID: pubsub-dummy-project
+      PUBSUB_TOPIC_IDS: apm-api,sync-manager
+    networks:
+      - pubsub-local
+    depends_on:
+      - pubsub
+networks:
+  pubsub-local:
+    driver: bridge
